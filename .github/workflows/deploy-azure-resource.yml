@@ -25,10 +25,18 @@ jobs:
 
       - name: Find Bicep files
         run: find . -name "*.bicep"        
- 
-      # Snyk IAC tests for security issues in IaC files
-      - name: Run Snyk to check configuration files for security issues
-        continue-on-error: false
-        uses: snyk/actions/iac@master
+
+      - name: Install Snyk
+        run: npm install -g snyk
+
+      - name: Scan Bicep
+        run: snyk iac test main.bicep
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
+ 
+      # # Snyk IAC tests for security issues in IaC files
+      # - name: Run Snyk to check configuration files for security issues
+      #   continue-on-error: false
+      #   uses: snyk/actions/iac@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
