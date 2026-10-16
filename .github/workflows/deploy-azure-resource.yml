@@ -23,6 +23,12 @@ jobs:
       - name: Echo Script
         run: echo Starting Bicep...
 
+      - name: Install Bicep
+        run: az bicep install
+
+      - name: Validate Bicep
+        run: az bicep build --file main.bicep
+
       - name: Find Bicep files
         run: find . -name "*.bicep"        
 
