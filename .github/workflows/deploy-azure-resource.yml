@@ -22,3 +22,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Echo Script
         run: echo Starting Bicep...
+
+      - name: Run Snyk to check configuration files for security issues
+        continue-on-error: false
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
