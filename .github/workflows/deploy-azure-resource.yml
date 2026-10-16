@@ -45,7 +45,7 @@ jobs:
         run: npm install -g snyk
 
       - name: Scan Bicep
-        run: snyk iac test main.json
+        run: snyk iac test main.json --report
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
  
