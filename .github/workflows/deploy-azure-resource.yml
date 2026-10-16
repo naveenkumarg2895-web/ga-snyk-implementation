@@ -22,7 +22,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Echo Script
         run: echo Starting Bicep...
-
+ 
+      # Snyk IAC tests for security issues in IaC files
       - name: Run Snyk to check configuration files for security issues
         continue-on-error: false
         uses: snyk/actions/iac@master
