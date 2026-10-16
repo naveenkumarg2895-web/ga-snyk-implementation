@@ -22,6 +22,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Echo Script
         run: echo Starting Bicep...
+
+      - name: Find Bicep files
+        run: find . -name "*.bicep"        
  
       # Snyk IAC tests for security issues in IaC files
       - name: Run Snyk to check configuration files for security issues
