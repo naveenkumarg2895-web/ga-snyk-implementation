@@ -29,8 +29,17 @@ jobs:
       - name: Validate Bicep
         run: az bicep build --file main.bicep
 
+      - name: verify Bicep
+        run: az bicep lint --file main.bicep        
+
       - name: Find Bicep files
-        run: find . -name "*.bicep"        
+        run: find . -name "*.bicep"   
+
+      - name: Debug files
+        run: |
+          pwd
+          ls -R
+          find . -name "*.bicep"       
 
       - name: Install Snyk
         run: npm install -g snyk
