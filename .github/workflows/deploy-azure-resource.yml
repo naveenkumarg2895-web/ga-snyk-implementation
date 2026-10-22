@@ -48,6 +48,7 @@ jobs:
         run: snyk iac test main.json --report
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
+          SNYK_API: https://api.au.snyk.io
  
       # # Snyk IAC tests for security issues in IaC files
       # - name: Run Snyk to check configuration files for security issues
