@@ -49,10 +49,27 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
           SNYK_API: https://api.au.snyk.io
- 
-      # # Snyk IAC tests for security issues in IaC files
-      # - name: Run Snyk to check configuration files for security issues
-      #   continue-on-error: false
-      #   uses: snyk/actions/iac@master
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+            # Build Java application
+      - name: Build Java application
+        working-directory: java-app
+        run: mvn package -DskipTests
+
+      # Build Docker image
+      - name: Build Docker image
+        run: docker build -t ga-snyk-implementation:latest ./java-app
+
+      # Scan Docker image with Snyk
+      - name: Scan Docker image with Snyk
+        run: snyk container test ga-snyk-implementation:latest --file=java-app/Dockerfile --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_API: https://api.au.snyk.io
+
+      # Upload Docker image snapshot to Snyk
+      - name: Monitor Docker image in Snyk
+        if: success()
+        run: snyk container monitor ga-snyk-implementation:latest --file=java-app/Dockerfile
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_API: https://api.au.snyk.io
